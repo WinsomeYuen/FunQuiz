@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/final_score"
+            android:text="final score"
             android:textAlignment="center"
             android:textColor="#F4BB3A"
             android:textSize="30sp"
@@ -27,7 +27,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/textview"
+            android:text="textview"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="54sp"
