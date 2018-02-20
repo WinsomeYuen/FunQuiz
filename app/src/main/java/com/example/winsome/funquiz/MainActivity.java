@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.funquiz.MESSAGE";
     private Questions myQuestionLib = new Questions();
 
-    private int myScore = 0;
+    private int myScore;
     private int questions = 6;
 
     @Override
@@ -66,21 +66,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onCheckboxClicked(View view){
-        boolean checked = ((CheckBox) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.checkbox1:
-                if (checked){myScore+=1;}
-                else{myScore-=1;}
-                break;
-            case R.id.checkbox2:
-                if (checked){myScore+=1;}
-                else{myScore-=1;}
-                break;
-        }
-    }
-
     public void checkResult(){
         for(int i=0; i<questions; i++){
             if(i == 2){
@@ -88,15 +73,19 @@ public class MainActivity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = (RadioButton) findViewById(selectedId);
                 String answer = (String) radioButton.getText();
-                if (answer.equals(myQuestionLib.getCorrectanswer(i))) {myScore++;}
-            } else if( i==5) {}
+                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {myScore++;}
+            } else if( i==5) {
+                CheckBox check0 = (CheckBox) findViewById(R.id.checkbox0);
+                CheckBox check1 = (CheckBox) findViewById(R.id.checkbox1);
+                CheckBox check2 = (CheckBox) findViewById(R.id.checkbox2);
+                if (check1.isChecked() && check2.isChecked() && !check0.isChecked()){myScore++;}
+            }
             else{
                 String currentQ = "answer" + i;
                 int resID = getResources().getIdentifier(currentQ, "id", getPackageName());
                 EditText myQuestion = (EditText) findViewById(resID);
                 String answer = String.valueOf(myQuestion.getText());
-                answer = answer.toLowerCase();
-                if (answer.equals(myQuestionLib.getCorrectanswer(i))) {myScore++;}
+                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {myScore++;}
             }
         }
     }
@@ -104,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
     /** Called when the user taps the Result button */
     public void sendMessage(View view) {
         checkResult();
-        Toast.makeText(MainActivity.this, "Final Score", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Final Score: "+myScore, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         String message = Integer.toString(myScore);
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+        myScore = 0;
     }
 }
