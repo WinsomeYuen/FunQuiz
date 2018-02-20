@@ -52,8 +52,4 @@ public class Questions {
         String answer = myCorrectAnswers[n];
         return answer;
     }
-
-    public int getTotalQuestions(){
-        return myQuestions.length;
-    }
 }

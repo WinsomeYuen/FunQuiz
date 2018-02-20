@@ -2,6 +2,7 @@ package com.example.winsome.funquiz;
 
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int myScore;
     private int questions = 6;
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,19 +75,25 @@ public class MainActivity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = (RadioButton) findViewById(selectedId);
                 String answer = (String) radioButton.getText();
-                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {myScore++;}
+                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {
+                    myScore++;
+                }
             } else if( i==5) {
                 CheckBox check0 = (CheckBox) findViewById(R.id.checkbox0);
                 CheckBox check1 = (CheckBox) findViewById(R.id.checkbox1);
                 CheckBox check2 = (CheckBox) findViewById(R.id.checkbox2);
-                if (check1.isChecked() && check2.isChecked() && !check0.isChecked()){myScore++;}
+                if (check1.isChecked() && check2.isChecked() && !check0.isChecked()){
+                    myScore++;
+                }
             }
             else{
                 String currentQ = "answer" + i;
                 int resID = getResources().getIdentifier(currentQ, "id", getPackageName());
                 EditText myQuestion = (EditText) findViewById(resID);
                 String answer = String.valueOf(myQuestion.getText());
-                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {myScore++;}
+                if (answer.equalsIgnoreCase(myQuestionLib.getCorrectanswer(i))) {
+                    myScore++;
+                }
             }
         }
     }
